@@ -15,22 +15,22 @@ const ComponentReducer = (state = { }, action) => {
           ...state, lineItems:action.lineItems
         }
       case "UPDATE_ORDER_SUCCESS":
-        let orders = state.orders;
-        let updatedOrder = state.selectedOrder;
+        let orders = state.orders
+        let updatedOrder = state.selectedOrder
         let lines = state.lineItems.map(line => {
-          line.selected = false;
-          return line;
+          line.selected = false
+          return line
         })
         orders.map(item => {
           if(item.ordernumber === updatedOrder.ordernumber){
             item = updatedOrder
           }
           let orderLines = item.lineItems.map(i => {
-            i.editMode = false;
-            return i;
+            i.editMode = false
+            return i
           })
-          item.lineItems = orderLines;
-          return item;
+          item.lineItems = orderLines
+          return item
         })
         return {
           ...state,
@@ -38,7 +38,7 @@ const ComponentReducer = (state = { }, action) => {
           selectedOrder:updatedOrder,
           lineItems:lines,
           selectedLines:[],
-          lineItemMode:'showDetail'
+          lineItemMode:false
         }   
       case "SELECT_ORDER":
         return {
@@ -46,10 +46,9 @@ const ComponentReducer = (state = { }, action) => {
           selectedOrder:action.order,
           selectedLines:[],
           lineItems:state.lineItems.map(line => {
-            line.selected = false;
-            return line;
-          }),
-          lineItemMode:'showDetail'
+            line.selected = false
+            return line
+          })
         }
       case "SEARCH_ORDER":
         return {
@@ -64,8 +63,8 @@ const ComponentReducer = (state = { }, action) => {
           ...state, lineItemMode:action.lineItemMode
         }   
       case "SELECT_LINE_ITEMS":
-        let selectedItem = action.item;
-        selectedItem.selected = true;
+        let selectedItem = action.item
+        selectedItem.selected = true
         return {
           ...state,
           selectedLines: [...state.selectedLines, selectedItem]
@@ -73,9 +72,9 @@ const ComponentReducer = (state = { }, action) => {
       case "UNSELECT_LINE_ITEMS":
         let lineItems = state.lineItems.map(line => {
           if(line.productid === action.item.productid){
-            line.selected = false;
+            line.selected = false
           }
-          return line;
+          return line
         })
         return {
           ...state, lineItems : lineItems, selectedLines : state.selectedLines.filter(item => item.productid !== action.item.productid)
@@ -87,9 +86,9 @@ const ComponentReducer = (state = { }, action) => {
       case "EDIT_LINE_ITEMS":
         let editLineItems = state.selectedOrder.lineItems.map(item => {
           if(item.productid === action.item.productid){
-            item.editMode = true;
+            item.editMode = true
           }
-          return item;
+          return item
         })
         return {
           ...state,
@@ -100,9 +99,9 @@ const ComponentReducer = (state = { }, action) => {
       case "UPDATE_LINE_UNITS":
         let updateLineItems = state.selectedOrder.lineItems.map(item => {
           if(item.productid === action.item.productid){
-            item.unit = action.unit;
+            item.unit = action.unit
           }
-          return item;
+          return item
         })
         return {
           ...state,

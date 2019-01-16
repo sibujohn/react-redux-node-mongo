@@ -5,9 +5,7 @@ var LineSchema = new Schema({
     cost: Number,      
     unit:  Number ,       
     desc:  String ,
-     productid:  String 
-       
-}); 
-
+    productid:  String       
+});
 
 module.exports = mongoose.model('LineItems', LineSchema);

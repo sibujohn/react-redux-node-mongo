@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-class SearchComponent extends React.Component{
+class SearchComponent extends Component{
   constructor(props){
     super(props)
     this.state = {
@@ -13,7 +13,7 @@ class SearchComponent extends React.Component{
     })
   }
   triggerSearch = (e) =>{
-    e.preventDefault();
+    e.preventDefault()
     this.props.searchOrder(this.state.search)
   }
   render(){

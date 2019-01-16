@@ -12,28 +12,28 @@ body {
 .border-yellow {border:1px solid yellow;}
 .border-purple {border:1px solid purple;}
 
-.sideBar-container {
+.sidebar-container {
     width: 200px;
     height: 100%;
     background: dimgrey;
     position: fixed;
 }
 
-.App-Main {
+.app-main {
     display: flex;
     position: absolute;
     top:0; bottom:0; left: 0; right:0;
     /*background: lightgrey;*/
 }
 
-.App-Container {
+.app-container {
     width: 100%;
     height: 100%;
     display: flex;
     flex: row nowrap;
 }
 
-.App-Sidebar {
+.app-sidebar {
     width: 100px;
     min-width: 100px;
     max-width: 280px;
@@ -42,44 +42,44 @@ body {
     border-right: 1px solid #dee2e6;
     flex-direction: column;
 }
-.App-Main-Container {
+.app-main-container {
     width: 100%;
     overflow: hidden;
     position: relative;
 }
 
-.App-Header {
+.app-header {
     min-height: 70px;
     z-index: 99;
     position: relative;
 }
 
-.App-Main-Header {
+.app-main-header {
     width: auto !important;
     border-bottom: 1px solid #dee2e6;
 }
-.App-Toolbar {
+.app-toolbar {
     min-height: 70px;
 }
-.App-Toobar .tools-box {
+.app-toobar .tools-box {
     width: auto;
 }
-.App-Toobar .tools-box .search-box {
+.app-toobar .tools-box .search-box {
     width: 300px !important;
 }
-.App-Toolbar .tools-box .user-box {
+.app-toolbar .tools-box .user-box {
     width:40px;
     height:40px;
 }
-.App-Toolbar .tools-box .user-box .user-avathar-link {
+.app-toolbar .tools-box .user-box .user-avathar-link {
      width:40px;
      height:40px;
      border-radius: 50%;
 }
-.App-Toolbar .tools-box .user-box .user-avathar-link .img {
+.app-toolbar .tools-box .user-box .user-avathar-link .img {
     border-radius: 50%;
 }
-.App-Toolbar .tools-box .search-box .form-control {
+.app-toolbar .tools-box .search-box .form-control {
     width:300px;
 }
 .header-notify {
@@ -92,26 +92,26 @@ body {
     border-radius: 50%;
 }
 
-.App-Main-Content {
+.app-main-content {
     width: 100%;
     height: calc(100vh - 71px) !important;
     background: #f6f6f6;
 }
-.Content-Left {
+.content-left {
     width: 100%;
     height: 100%;
 }
-.Content-Right {
+.content-right {
     width: 350px;
     min-width:250px;
     max-width: 350px;
     margin-bottom: 2px;
     height: 100%;
 }
-.Content-Right .header {
+.content-right .header {
     min-height: 64px;
 }
-.Content-Right .header .title-box .title {
+.content-right .header .title-box .title {
     font-size: 16px;
 }
 .actions-box .btn {
@@ -146,14 +146,14 @@ body {
     cursor: pointer;
 }
 
-.Content-Right .card-line-item {
+.content-right .card-line-item {
     width:100%;
     min-height: 400px;
     border-radius: 0;
     border: none;
     position: relative;
 }
-.Content-Right .card-line-item label.card-title {
+.content-right .card-line-item label.card-title {
     margin-bottom: 0;
     font-weight: 700;
 }
@@ -263,7 +263,7 @@ body {
     overflow-y: auto;
 }
     
-.Item-Area{
+.item-area{
     height: calc(100% - 64px);
 }
 

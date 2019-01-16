@@ -21,7 +21,7 @@ export const RequestOrders = dispatch => {
         type:"FETCH_ORDERS_FAILURE",
         error : "Error Message"
       })
-    });
+    })
   }
 }
 
@@ -45,7 +45,7 @@ export const RequestLineItems = dispatch => {
         type:"FETCH_LINE_ITEMS_FAILURE",
         error : "Error Message"
       })
-    });
+    })
   }
 }
 
@@ -126,8 +126,8 @@ export const UpdateLineUnits = dispatch => {
 
 export const SaveLineItems = dispatch => {
   return (selectedOrder, selectedLines) => {
-    let lineItems = selectedOrder.lineItems.concat(selectedLines);
-    selectedOrder.lineItems = lineItems;
+    let lineItems = selectedOrder.lineItems.concat(selectedLines)
+    selectedOrder.lineItems = lineItems
     dispatch ({
       type:"UPDATE_ORDER"
     })
@@ -146,7 +146,7 @@ export const SaveLineItems = dispatch => {
         type:"UPDATE_ORDER_FAILURE",
         error : "Error Message"
       })
-    });
+    })
   }
 }
 
@@ -156,8 +156,8 @@ export const SaveLineUnits = dispatch => {
       if(line.productid === item.productid){
         line = item
       }
-      return line;
-    });
+      return line
+    })
     dispatch ({
       type:"UPDATE_ORDER"
     })
@@ -176,7 +176,7 @@ export const SaveLineUnits = dispatch => {
         type:"UPDATE_ORDER_FAILURE",
         error : "Error Message"
       })
-    });
+    })
   }
 }
 
@@ -184,7 +184,7 @@ export const RemoveLineItems = dispatch => {
   return (selectedOrder, item) => {
     selectedOrder.lineItems = selectedOrder.lineItems.filter(line => {
       return line.productid !== item.productid
-    });
+    })
     dispatch ({
       type:"UPDATE_ORDER"
     })
@@ -203,6 +203,6 @@ export const RemoveLineItems = dispatch => {
         type:"UPDATE_ORDER_FAILURE",
         error : "Error Message"
       })
-    });
+    })
   }
 }

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-class AddComponent extends React.Component{
+class AddComponent extends Component{
   constructor(props){
     super(props)
     this.state = {
@@ -13,11 +13,10 @@ class AddComponent extends React.Component{
     })
   }
   triggerLineSearch = (e) =>{
-    e.preventDefault();
+    e.preventDefault()
     this.props.searchLineItems(this.state.searchLine)
   }
   toggleSelectLine = (event, item) =>{
-    event.stopPropagation()
     if(!item.selected){
       this.props.SelectLineItems(this.props.selectedLines, item)
     }
@@ -43,27 +42,22 @@ class AddComponent extends React.Component{
             { this.props.lineItems && this.props.lineItems.map((item, index) =>
               <li className="list-group-item d-flex flex-row align-items-center" key={index} onClick={(e) => this.toggleSelectLine(e, item)}>
                 <div className="check-box" >
-                  { !item.selected && 
-                    <i className="fas fa-square"></i>
-                  }
-                  { item.selected && 
-                    <i className="fas fa-check-square"></i>
-                  }
-                  </div>
-                  <div className="content-box">
-                      <div className="item-name">
-                          <label>Item Name: </label>
-                          <span>{item.uom}</span>
-                      </div>
-                      <div className="item-description">
-                          <label className="w-100"> 
-                              Description:
-                          </label>
-                          <span className="text-justify">
-                            {item.desc}
-                          </span>
-                      </div>
-                  </div>
+                  <i className={item.selected ? 'fas fa-check-square' : 'fas fa-square'}></i>
+                </div>
+                <div className="content-box">
+                    <div className="item-name">
+                        <label>Item Name: </label>
+                        <span>{item.uom}</span>
+                    </div>
+                    <div className="item-description">
+                        <label className="w-100"> 
+                            Description:
+                        </label>
+                        <span className="text-justify">
+                          {item.desc}
+                        </span>
+                    </div>
+                </div>
               </li>
             )}
           </ul>

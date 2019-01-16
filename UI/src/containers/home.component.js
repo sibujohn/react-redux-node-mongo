@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component }from 'react'
 import { connect } from 'react-redux'
 
 import { 
@@ -21,7 +21,7 @@ import SearchComponent from '../components/search.component'
 import ListComponent from '../components/list.component'
 import LineItemComponent from '../components/lineitem.component'
 
-class HomeComponent extends React.Component{
+class HomeComponent extends Component{
   componentWillMount(){
     this.props.RequestOrders()
     this.props.RequestLineItems()
@@ -31,7 +31,7 @@ class HomeComponent extends React.Component{
       if(this.props.searchText){
         return this.props.orders.filter(order => order.ordernumber.toUpperCase().startsWith(this.props.searchText.toUpperCase()))
       }
-      return this.props.orders;
+      return this.props.orders
     }
     return []
   }
@@ -40,37 +40,37 @@ class HomeComponent extends React.Component{
       if(this.props.searchLine){
         return this.props.lineItems.filter(line => line.uom.toUpperCase().startsWith(this.props.searchLine.toUpperCase()))
       }
-      return this.props.lineItems;
+      return this.props.lineItems
     }
     return []
   }
   toggleLineItemMode = (mode) =>{
-    this.props.ToggleLineItemMode(mode)
-    if(mode === 'showDetail'){
+    if(!mode){
       this.props.SaveLineItems(this.props.selectedOrder, this.props.selectedLines)
     }
+    this.props.ToggleLineItemMode(mode)
   }
   render(){
     return (
       <div >
-        <div className="App-Header">
-          <div className="App-Main-Header">
-            <div className="d-flex App-Toolbar align-items-center justify-content-between">
+        <div className="app-header">
+          <div className="app-main-header">
+            <div className="d-flex app-toolbar align-items-center justify-content-between">
               <UserComponent/>
               <SearchComponent searchText={this.props.searchText} searchOrder={this.props.SearchOrder}/>
             </div>
           </div>
         </div>
-        <div className="App-Main-Content d-flex flex-row">
-          <section className="Content-Left">
+        <div className="app-main-content d-flex flex-row">
+          <section className="content-left">
             <ListComponent orders={this.getFilteredList()} selectOrder={this.props.SelectOrder} selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}/>
           </section>
-          <section className="Content-Right d-flex flex-column border">
+          <section className="content-right d-flex flex-column border">
             <LineItemComponent 
               selectedOrder={this.props.selectedOrder || (this.props.orders && this.props.orders[0])}
               lineItems={this.getFilteredLineList()}
               toggleLineItemMode={this.toggleLineItemMode}
-              lineItemMode={this.props.lineItemMode || 'showDetail'} 
+              lineItemMode={this.props.lineItemMode}
               searchLineItems={this.props.SearchLineItems}
               RemoveLineItems={this.props.RemoveLineItems}
               EditLineItems={this.props.EditLineItems}
@@ -89,7 +89,7 @@ class HomeComponent extends React.Component{
 
 const mapStateToProps = (state) => ({
   ...state.homeState.componentState
-});
+})
 
 const mapDispatchToProps = dispatch => ({
   RequestOrders : RequestOrders(dispatch),

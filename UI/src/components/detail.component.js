@@ -1,21 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-class DetailComponent extends React.Component{ 
+class DetailComponent extends Component{ 
   removeLineItem = (event, item) =>{
-    event.stopPropagation();
-    this.props.RemoveLineItems(this.props.selectedOrder, item);
+    this.props.RemoveLineItems(this.props.selectedOrder, item)
   }
   editLineItem = (event, item) =>{
-    event.stopPropagation();
     this.props.EditLineItems(item)
   }
   editItemUnits = (event, item) =>{
-    event.stopPropagation();
     this.props.UpdateLineUnits(event.target.value, item)
   }
   saveLineUnits = (event, item) =>{
-    event.stopPropagation();
-    this.props.SaveLineUnits(this.props.selectedOrder, item);
+    this.props.SaveLineUnits(this.props.selectedOrder, item)
   }
   render(){
     return (

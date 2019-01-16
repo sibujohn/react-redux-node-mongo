@@ -56,10 +56,9 @@ const userRoutes = express.Router();
 config = require('../config/DB');
 let User = require('../models/userList');
 let LineItems=require('../models/lineitems')
- bodyParser = require('body-parser');
-  app.use(bodyParser.urlencoded({extended : false}));
- app.use(bodyParser.json());
-    
+bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended : false}));
+app.use(bodyParser.json());   
 
 
 
@@ -79,7 +78,7 @@ let LineItems=require('../models/lineitems')
  *           $ref: '#/definitions/List'
  */
 userRoutes.route('/list').get(function (req, res) {
-   User.find(function (err, userlists){
+  User.find(function (err, userlists){
     if(err){
       console.log(err);
     }
@@ -105,7 +104,7 @@ userRoutes.route('/list').get(function (req, res) {
  *           $ref: '#/definitions/lineList'
  */
 userRoutes.route('/linelist').get(function (req, res) {
-   LineItems.find(function (err, lineitems){
+  LineItems.find(function (err, lineitems){
     if(err){
       console.log(err);
     }
@@ -164,8 +163,7 @@ userRoutes.post('/edit', function(req, res, next) {
 
 userRoutes.post('/update', function(req, res, next) {
   User.findOneAndUpdate({_id:req.body._id}, req.body, function (err, post) {
-    if (err) return next(err);
-	
+    if (err) return next(err);	
     else res.send(true);
   });
 });
@@ -193,9 +191,8 @@ userRoutes.post('/update', function(req, res, next) {
 
 userRoutes.post('/delete', function(req, res, next) {
   User.findOneAndUpdate({_id:req.body._id}, req.body, function (err, post) {
-	  //console.log("postdata"+res.json(post));
-    if (err) return next(err);
-   else res.send(true);
+	  if (err) return next(err);
+    else res.send(true);
   });
 });
 

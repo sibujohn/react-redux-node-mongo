@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history'
 
 import HomeComponent from '../containers/home.component'
 
-const history = createBrowserHistory();
+const history = createBrowserHistory()
 const AppRoutes = (
     <Router history={history} >
         <Switch>

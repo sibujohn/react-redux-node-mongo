@@ -1,8 +1,8 @@
-import React from 'react'
-import ReactTable from "react-table";
+import React, { Component } from 'react'
+import ReactTable from "react-table"
 import 'react-table/react-table.css'
 
-class ListComponent extends React.Component{
+class ListComponent extends Component{
   render(){
     const columns = [{
       Header: 'Order No:',
@@ -25,7 +25,7 @@ class ListComponent extends React.Component{
     },{
       Header: 'Shipped',
       accessor: 'shipped'
-    }];
+    }]
     return (
       <ReactTable
         data={this.props.orders}
