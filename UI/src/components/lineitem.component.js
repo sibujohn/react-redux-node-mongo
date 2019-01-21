@@ -15,10 +15,12 @@ class LineItemComponent extends Component{
                         <label className="title ">DETAILS - LINE ITEM</label>
                     </div>
                     <div className="actions-box">
-                        <button type="button" className="btn btn-sm icon-save" 
-                            onClick={(e) => this.toggleLineItemMode(e, !this.props.lineItemMode)}>
-                            <i className={this.props.lineItemMode ? 'fas fa-save' : 'fas fa-plus'}></i>
-                        </button>
+                        { this.props.selectedOrder && 
+                            <button type="button" className="btn btn-sm icon-save" 
+                                onClick={(e) => this.toggleLineItemMode(e, !this.props.lineItemMode)}>
+                                <i className={this.props.lineItemMode ? 'fas fa-save' : 'fas fa-plus'}></i>
+                            </button>
+                        }
                     </div>
                 </div>     
                 <div className="item-area">
@@ -36,6 +38,7 @@ class LineItemComponent extends Component{
                             lineItems={this.props.lineItems} 
                             searchLineItems={this.props.searchLineItems}
                             selectedLines = {this.props.selectedLines}
+                            RequestLineItems = {this.props.RequestLineItems}
                             SelectLineItems = {this.props.SelectLineItems}
                             UnSelectLineItems = {this.props.UnSelectLineItems}>
                         </AddComponent>

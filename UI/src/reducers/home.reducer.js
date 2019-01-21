@@ -1,18 +1,86 @@
 import { combineReducers } from 'redux'
 
-const ComponentReducer = (state = { }, action) => {
+const initialState = {
+  searchText: '',
+  customers: [],
+  selectedCustomer:null,
+  orders:[],
+  orderOptions: {
+    skip:0,
+    limit:20,
+    records:0,
+    sortby:"date",
+    sorthow:"desc",
+    loading:false
+  },
+  selectedOrder:null,
+  lineItems:[],
+  lineItemMode:false,
+  selectedLines:[]
+};
+
+const ComponentReducer = (state = initialState, action) => {
     switch (action.type) {
-      case "FETCH_ORDERS_SUCCESS":
+      case "SEARCH_CUSTOMER_SUCCESS":
         return {
           ...state,
-          orders:action.orders, 
-          selectedOrder:action.orders[0], 
-          selectedLines:[]
+          customers:action.customers
+        }
+      case "UPDATE_CUSTOMER_VALUE":
+        return {
+          ...state,
+          searchText: action.searchText
+        };
+      case "CLEAR_CUSTOMERS":
+        return {
+          ...state,
+          customers: []
+        };
 
+      case "'UPDATE_CUSTOMERS":
+        if (action.searchText !== state.searchText) {
+          return {
+            ...state
+          };
+        }
+        return {
+          ...state,
+          customers: action.customers
+        };
+      case "CUSTOMER_SELECTED":
+        return {
+          ...state,
+          selectedCustomer:action.selectedCustomer
+        }
+      case "FETCH_ORDERS_SUCCESS":
+        let orderOptions = state.orderOptions
+        orderOptions.records = action.orders.count
+        orderOptions.loading = false
+        return {
+          ...state,
+          orders:action.orders.docs, 
+          selectedOrder:(action.selectedOrder) ? action.selectedOrder : action.orders.docs[0], 
+          orderOptions:orderOptions,
+          selectedLines:[]
+        }
+      case "UPDATE_ORDER_OPTIONS":
+        let orderOption = action.orderOptions
+        if(action.mode === 'lazy'){
+          orderOption.skip = action.showSpan
+        }
+        else if(action.mode === 'sort'){
+          orderOption.sortby = action.sortParam.sortby
+          orderOption.sorthow = action.sortParam.sorthow
+          orderOption.skip = 0
+        }
+        orderOption.loading = true;
+        return {
+          ...state,
+          orderOptions:orderOption
         }
       case "FETCH_LINE_ITEMS_SUCCESS":
         return {
-          ...state, lineItems:action.lineItems
+          ...state, lineItems:action.lineItems.docs
         }
       case "UPDATE_ORDER_SUCCESS":
         let orders = state.orders

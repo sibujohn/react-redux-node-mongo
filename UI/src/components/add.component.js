@@ -7,14 +7,17 @@ class AddComponent extends Component{
       searchLine : ""
     }
   }
+  componentDidMount() {
+    this.props.RequestLineItems(this.state.searchLine, {first:0, rows:10})
+  }
   updateSearchLine = e =>{
     this.setState({
       searchLine:e.target.value
     })
+    this.triggerLineSearch()
   }
-  triggerLineSearch = (e) =>{
-    e.preventDefault()
-    this.props.searchLineItems(this.state.searchLine)
+  triggerLineSearch = () =>{
+    this.props.RequestLineItems(this.state.searchLine, {first:0, rows:10})
   }
   toggleSelectLine = (event, item) =>{
     if(!item.selected){
@@ -27,9 +30,9 @@ class AddComponent extends Component{
   render(){
     return (
       <div className="full-height">
-        <form className="search-box w-100" onSubmit={(e)=>this.triggerLineSearch(e)}>
+        <form className="search-box w-100" >
             <div className="input-group input-group-sm">
-                <input type="text" className="form-control" placeholder="Search here..." value={this.state.searchLine} onChange={this.updateSearchLine}/>
+                <input type="text" className="form-control" placeholder="Search lineitem..." value={this.state.searchLine} onChange={this.updateSearchLine}/>
                 <div className="input-group-prepend">
                     <span className="input-group-text">
                         <i className="fas fa-search"></i>
@@ -37,8 +40,8 @@ class AddComponent extends Component{
                 </div>
             </div>
         </form>
-        <div className="add-list-elements">
-          <ul className="list-group scroller">
+        <div className="add-list-elements scroller">
+          <ul className="list-group">
             { this.props.lineItems && this.props.lineItems.map((item, index) =>
               <li className="list-group-item d-flex flex-row align-items-center" key={index} onClick={(e) => this.toggleSelectLine(e, item)}>
                 <div className="check-box" >

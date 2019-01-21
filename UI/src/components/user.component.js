@@ -10,7 +10,8 @@ class UserComponent extends Component{
   render(){
     return (
       <div className="brand-title mx-4">
-        <h5>{this.state.customerName}</h5>
+        <span>Customer Lookup</span>
+        <h5>{this.props.selectedCustomer && this.props.selectedCustomer.customername}</h5>
       </div>
     )
   }

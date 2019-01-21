@@ -1,19 +1,97 @@
 import { Http_Get, Http_Post } from '../utils/app.apis'
-import { REQUEST_ORDER, REQUEST_LINE_ITEMS, UPDATE_ORDER } from '../constants/home.constants'
+import { SEARCH_CUSTOMER, REQUEST_ORDER, REQUEST_LINE_ITEMS, UPDATE_ORDER } from '../constants/home.constants'
 
-export const RequestOrders = dispatch => {
+export const SearchCustomers = dispatch => {
+  return searchObject => {
+    dispatch ({
+      type:"SEARCH_CUSTOMER"
+    })
+    Http_Get(SEARCH_CUSTOMER+searchObject.value)
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(response) {
+      dispatch ({
+        type:"SEARCH_CUSTOMER_SUCCESS",
+        customers : response
+      })
+    })
+    .then(function(myJson) {
+      dispatch ({
+        type:"SEARCH_CUSTOMER_FAILURE",
+        error : "Error Message"
+      })
+    })
+  }
+}
+
+export const UpdateCustomerValue = dispatch => {
+  return searchText => {
+    dispatch ({
+      type: "UPDATE_CUSTOMER_VALUE",
+      searchText: searchText
+    })
+  }
+}
+
+export const ClearCustomers = dispatch => {
   return () => {
+    dispatch ({
+      type: "CLEAR_CUSTOMERS"
+    })
+  }
+}
+
+export const UpdateCustomers = dispatch => {
+  return (customers, serarchValue) => {
+    dispatch ({
+      type: "UPDATE_CUSTOMERS",
+      customers,
+      serarchValue
+    })
+  }
+}
+
+export const CustomerSelected = dispatch => {
+  return selectedCustomer => {
+    dispatch ({
+      type:"CUSTOMER_SELECTED",
+      selectedCustomer : selectedCustomer
+    })
+  }
+}
+
+export const UpdateOrderOptions = (dispatch) => {
+  return (orderOptions, mode, showSpan, sortParam) => {
+    dispatch ({
+      type:"UPDATE_ORDER_OPTIONS",
+      orderOptions : orderOptions,
+      mode : mode,
+      showSpan : showSpan,
+      sortParam : sortParam
+    })
+  }
+}
+
+export const RequestOrders = (dispatch) => {
+  return (selectedCustomer, orderOptions, selectedOrder) => {
     dispatch ({
       type:"FETCH_ORDERS"
     })
-    Http_Get(REQUEST_ORDER)
+    let query = selectedCustomer.customerid
+    query += "?skip="+orderOptions.skip
+    query += "&limit="+orderOptions.limit
+    query += "&sortby="+orderOptions.sortby
+    query += "&sorthow="+orderOptions.sorthow
+    Http_Get(REQUEST_ORDER+query)
     .then(function(response) {
       return response.json()
     })
     .then(function(response) {
       dispatch ({
         type:"FETCH_ORDERS_SUCCESS",
-        orders : response
+        orders : response,
+        selectedOrder:selectedOrder
       })
     })
     .then(function(myJson) {
@@ -26,18 +104,22 @@ export const RequestOrders = dispatch => {
 }
 
 export const RequestLineItems = dispatch => {
-  return () => {
+  return (searchLine, options) => {
     dispatch ({
       type:"FETCH_LINE_ITEMS"
-    })
-    Http_Get(REQUEST_LINE_ITEMS)
+    })    
+    let query = (searchLine) ? searchLine : null
+    query += "?skip="+options.first+options.rows
+    query += "&limit="+options.rows
+    Http_Get(REQUEST_LINE_ITEMS+query)
     .then(function(response) {
       return response.json()
     })
     .then(function(response) {
       dispatch ({
         type:"FETCH_LINE_ITEMS_SUCCESS",
-        lineItems : response
+        lineItems : response,
+        searchLine, options
       })
     })
     .then(function(myJson) {
@@ -63,15 +145,6 @@ export const ToggleLineItemMode = dispatch => {
     dispatch ({
       type:"TOGGLE_LINE_ITEM_MODE",
       lineItemMode : lineItemMode
-    })
-  }
-}
-
-export const SearchOrder = dispatch => {
-  return searchText => {
-    dispatch ({
-      type:"SEARCH_ORDER",
-      searchText : searchText
     })
   }
 }

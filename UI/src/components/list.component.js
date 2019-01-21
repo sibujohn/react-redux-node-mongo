@@ -1,57 +1,57 @@
 import React, { Component } from 'react'
-import ReactTable from "react-table"
-import 'react-table/react-table.css'
+import { Dropdown } from 'primereact/dropdown';
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
 
 class ListComponent extends Component{
-  render(){
-    const columns = [{
-      Header: 'Order No:',
-      accessor: 'ordernumber'
-    },{
-      Header: 'Date',
-      accessor: 'date',
-    },{
-      Header: 'Zip',
-      accessor: 'zip'
-    },{
-      Header: 'State',
-      accessor: 'state'
-    },{
-      Header: 'Created By',
-      accessor: 'createdBy'
-    },{
-      Header: 'Picked',
-      accessor: 'picked'
-    },{
-      Header: 'Shipped',
-      accessor: 'shipped'
-    }]
+  constructor(props){
+    super(props)
+    this.state = {
+      selectedSort : {label: 'Most Recent', value: 'desc'}
+    }
+  }
+  sortOptions = [
+    {label: 'Most Recent', value: 'desc'},
+    {label: 'Old', value: 'asc'}
+  ]
+  onVirtualScroll = (event) => {
+    this.props.lazyLoadOrders(event.first)
+  }
+  selectSort = (selected)=> {
+    let sort = this.sortOptions.filter(item => { return item.value === selected.value})
+    this.setState({selectedSort: sort[0]})
+    this.props.sortLoadOrders({sortby:'date', sorthow:selected.value})
+  }
+  selectOrder = (order) => {
+    this.props.selectOrder(order)
+  }
+  selectSort
+  render() {
     return (
-      <ReactTable
-        data={this.props.orders}
-        columns={columns}
-        style={{
-          height: "100%"
-        }}
-        showPagination={false}
-        className="-striped -highlight"
-        getTrProps={(state, rowInfo) => {
-          if (rowInfo && rowInfo.row) {
-            return {
-              onClick: (e) => {
-                this.props.selectOrder(rowInfo.original)
-              },
-              style: {
-                background: rowInfo.original.ordernumber === (this.props.selectedOrder && this.props.selectedOrder.ordernumber) ? '#00afec' : 'white',
-                color: rowInfo.original.ordernumber === (this.props.selectedOrder && this.props.selectedOrder.ordernumber) ? 'white' : 'black'
-              }
-            }
-          }else{
-            return {}
+      <div className="list-cover">
+        <div className="sort-select">
+          {this.props.selectedCustomer && 
+            <Dropdown value={this.state.selectedSort.value} options={this.sortOptions}
+              onChange={this.selectSort}/>
           }
-        }}
-      />
-    )
+        </div>
+        <div className="list-table">
+          <DataTable value={this.props.orders} scrollable={true} virtualScroll={true} virtualRowHeight={30}
+            rows={20} totalRecords={this.props.orderOptions.records} lazy={true} onVirtualScroll={this.onVirtualScroll}
+            selectionMode="single" selection={this.props.selectedOrder}
+            onSelectionChange={e => this.selectOrder(e.value)} loading={this.props.orderOptions.loading}
+          >
+            <Column field="ordernumber" header="Order Number" />
+            <Column field="date" header="Date" />
+            <Column field="zip" header="ZIP" />
+            <Column field="state" header="State" />
+            <Column field="createdBy" header="Created By" />
+            <Column field="picked" header="Pickked" />
+            <Column field="shipped" header="Shipped" />
+          </DataTable>
+        </div>
+      </div>
+    );
   }
 }
 
