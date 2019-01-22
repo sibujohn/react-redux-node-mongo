@@ -17,11 +17,15 @@ class SearchComponent extends Component{
       );
     }
     const selectCustomer = (e, customer) =>{
-      e.stopPropagation()
       this.props.customerSelected(customer)
     }
     const onCustomerValueChange = (e) => {
-      this.props.updateCustomerValue(e.target.value)
+      if(e.target && e.target.value){
+        this.props.updateCustomerValue(e.target.value)
+      }
+      else if(e.target && e.target.textContent){
+        this.props.updateCustomerValue(e.target.textContent)
+      }
     }
     const { searchText, customers, SearchCustomers, ClearCustomers } = this.props;
     const inputProps = {

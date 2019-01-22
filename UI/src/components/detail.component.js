@@ -15,7 +15,7 @@ class DetailComponent extends Component{
   }
   render(){
     return (
-      <div className="scroller">
+      <div className="full-height scroller">
         { this.props.selectedOrder && this.props.selectedOrder.lineItems
           && this.props.selectedOrder.lineItems.map((item, index) =>
           <div className="card card-line-item mb-3" key={index}>

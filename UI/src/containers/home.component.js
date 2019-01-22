@@ -11,9 +11,7 @@ import {
   RequestLineItems,
   SelectOrder,
   ToggleLineItemMode,
-  SearchLineItems,
   SelectLineItems,
-  UnSelectLineItems,
   SaveLineItems,
   RemoveLineItems,
   EditLineItems,
@@ -82,7 +80,6 @@ class HomeComponent extends Component{
               lineItems={this.props.lineItems}
               toggleLineItemMode={this.toggleLineItemMode}
               lineItemMode={this.props.lineItemMode}
-              searchLineItems={this.props.SearchLineItems}
               RequestLineItems ={this.props.RequestLineItems}
               RemoveLineItems={this.props.RemoveLineItems}
               EditLineItems={this.props.EditLineItems}
@@ -90,8 +87,7 @@ class HomeComponent extends Component{
               SaveLineUnits={this.props.SaveLineUnits}
               
               selectedLines = {this.props.selectedLines}
-              SelectLineItems = {this.props.SelectLineItems}
-              UnSelectLineItems = {this.props.UnSelectLineItems}/>
+              SelectLineItems = {this.props.SelectLineItems}/>
           </section>
         </div>
       </div>
@@ -113,12 +109,10 @@ const mapDispatchToProps = dispatch => ({
   RequestLineItems : RequestLineItems(dispatch),
   SelectOrder : SelectOrder(dispatch),
   ToggleLineItemMode : ToggleLineItemMode(dispatch),
-  SearchLineItems : SearchLineItems(dispatch),
   SaveLineItems : SaveLineItems(dispatch),
   RemoveLineItems : RemoveLineItems(dispatch),
   EditLineItems : EditLineItems(dispatch),
   SelectLineItems : SelectLineItems(dispatch),
-  UnSelectLineItems : UnSelectLineItems(dispatch),
   UpdateLineUnits : UpdateLineUnits(dispatch),
   SaveLineUnits : SaveLineUnits(dispatch)
 })

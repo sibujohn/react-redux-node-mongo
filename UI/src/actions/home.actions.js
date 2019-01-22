@@ -1,4 +1,4 @@
-import { Http_Get, Http_Post } from '../utils/app.apis'
+import { Http_Get, Http_Post, Http_Put } from '../utils/app.apis'
 import { SEARCH_CUSTOMER, REQUEST_ORDER, REQUEST_LINE_ITEMS, UPDATE_ORDER } from '../constants/home.constants'
 
 export const SearchCustomers = dispatch => {
@@ -108,9 +108,12 @@ export const RequestLineItems = dispatch => {
     dispatch ({
       type:"FETCH_LINE_ITEMS"
     })    
-    let query = (searchLine) ? searchLine : null
-    query += "?skip="+options.first+options.rows
-    query += "&limit="+options.rows
+    let query = "?"
+    if(searchLine){
+      query += "name="+searchLine+"&"
+    }
+    query += "skip="+options.skip
+    query += "&limit="+options.limit
     Http_Get(REQUEST_LINE_ITEMS+query)
     .then(function(response) {
       return response.json()
@@ -149,29 +152,10 @@ export const ToggleLineItemMode = dispatch => {
   }
 }
 
-export const SearchLineItems = dispatch => {
-  return searchLine => {
-    dispatch ({
-      type:"SEARCH_LINE_ITEMS",
-      searchLine : searchLine
-    })
-  }
-}
-
 export const SelectLineItems = dispatch => {
   return (selectedLines, item) => {
     dispatch ({
       type:"SELECT_LINE_ITEMS",
-      selectedLines: selectedLines,
-      item : item
-    })
-  }
-}
-
-export const UnSelectLineItems = dispatch => {
-  return (selectedLines, item) => {
-    dispatch ({
-      type:"UNSELECT_LINE_ITEMS",
       selectedLines: selectedLines,
       item : item
     })
@@ -204,7 +188,7 @@ export const SaveLineItems = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    Http_Post(UPDATE_ORDER, selectedOrder)
+    Http_Put(UPDATE_ORDER, selectedOrder)
     .then(function(response) {
       return response.json()
     })
@@ -234,7 +218,7 @@ export const SaveLineUnits = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    Http_Post(UPDATE_ORDER, selectedOrder)
+    Http_Put(UPDATE_ORDER, selectedOrder)
     .then(function(response) {
       return response.json()
     })
@@ -261,7 +245,7 @@ export const RemoveLineItems = dispatch => {
     dispatch ({
       type:"UPDATE_ORDER"
     })
-    Http_Post(UPDATE_ORDER, selectedOrder)
+    Http_Put(UPDATE_ORDER, selectedOrder)
     .then(function(response) {
       return response.json()
     })

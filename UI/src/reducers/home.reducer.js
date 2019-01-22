@@ -14,7 +14,7 @@ const initialState = {
     loading:false
   },
   selectedOrder:null,
-  lineItems:[],
+  lineItems:{},
   lineItemMode:false,
   selectedLines:[]
 };
@@ -50,7 +50,8 @@ const ComponentReducer = (state = initialState, action) => {
       case "CUSTOMER_SELECTED":
         return {
           ...state,
-          selectedCustomer:action.selectedCustomer
+          selectedCustomer:action.selectedCustomer,
+          selectedLines : []
         }
       case "FETCH_ORDERS_SUCCESS":
         let orderOptions = state.orderOptions
@@ -60,8 +61,7 @@ const ComponentReducer = (state = initialState, action) => {
           ...state,
           orders:action.orders.docs, 
           selectedOrder:(action.selectedOrder) ? action.selectedOrder : action.orders.docs[0], 
-          orderOptions:orderOptions,
-          selectedLines:[]
+          orderOptions:orderOptions
         }
       case "UPDATE_ORDER_OPTIONS":
         let orderOption = action.orderOptions
@@ -80,15 +80,11 @@ const ComponentReducer = (state = initialState, action) => {
         }
       case "FETCH_LINE_ITEMS_SUCCESS":
         return {
-          ...state, lineItems:action.lineItems.docs
+          ...state, lineItems:action.lineItems
         }
       case "UPDATE_ORDER_SUCCESS":
         let orders = state.orders
         let updatedOrder = state.selectedOrder
-        let lines = state.lineItems.map(line => {
-          line.selected = false
-          return line
-        })
         orders.map(item => {
           if(item.ordernumber === updatedOrder.ordernumber){
             item = updatedOrder
@@ -104,7 +100,6 @@ const ComponentReducer = (state = initialState, action) => {
           ...state,
           orders:orders, 
           selectedOrder:updatedOrder,
-          lineItems:lines,
           selectedLines:[],
           lineItemMode:false
         }   
@@ -112,11 +107,7 @@ const ComponentReducer = (state = initialState, action) => {
         return {
           ...state,
           selectedOrder:action.order,
-          selectedLines:[],
-          lineItems:state.lineItems.map(line => {
-            line.selected = false
-            return line
-          })
+          selectedLines:[]
         }
       case "SEARCH_ORDER":
         return {
@@ -131,11 +122,8 @@ const ComponentReducer = (state = initialState, action) => {
           ...state, lineItemMode:action.lineItemMode
         }   
       case "SELECT_LINE_ITEMS":
-        let selectedItem = action.item
-        selectedItem.selected = true
         return {
-          ...state,
-          selectedLines: [...state.selectedLines, selectedItem]
+          ...state, selectedLines:action.item
         }
       case "UNSELECT_LINE_ITEMS":
         let lineItems = state.lineItems.map(line => {

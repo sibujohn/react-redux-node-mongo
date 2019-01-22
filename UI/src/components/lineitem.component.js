@@ -36,11 +36,9 @@ class LineItemComponent extends Component{
                     {this.props.lineItemMode && 
                         <AddComponent 
                             lineItems={this.props.lineItems} 
-                            searchLineItems={this.props.searchLineItems}
                             selectedLines = {this.props.selectedLines}
                             RequestLineItems = {this.props.RequestLineItems}
-                            SelectLineItems = {this.props.SelectLineItems}
-                            UnSelectLineItems = {this.props.UnSelectLineItems}>
+                            SelectLineItems = {this.props.SelectLineItems}>
                         </AddComponent>
                     }
                 </div>
