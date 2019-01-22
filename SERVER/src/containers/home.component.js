@@ -36,17 +36,22 @@ class HomeComponent extends Component{
   customerSelected = (customer) => {
     this.props.UpdateCustomerValue(customer.customerName)
     this.props.CustomerSelected(customer)
-    this.props.RequestOrders(customer, this.props.orderOptions)
+    setTimeout(() => {
+      this.props.RequestOrders(customer, this.props.orderOptions)
+    }, 500);
+    
   }
   lazyLoadOrders = (showSpan) =>{
-    if(showSpan<this.props.orderOptions.records){
-      this.props.UpdateOrderOptions(this.props.orderOptions, 'lazy', showSpan, null)
+    if(this.props.orderOptions.skip+this.props.orderOptions.limit<this.props.orderOptions.records){
+      this.props.UpdateOrderOptions(this.props.orderOptions, 'lazy', this.props.orderOptions.skip+this.props.orderOptions.limit, null)
       this.props.RequestOrders( this.props.selectedCustomer, this.props.orderOptions, this.props.selectedOrder)
     }
   }
   sortLoadOrders = (sortParam) =>{
-    this.props.UpdateOrderOptions(this.props.orderOptions, 'sort', null, sortParam)
-    this.props.RequestOrders( this.props.selectedCustomer, this.props.orderOptions, this.props.selectedOrder)
+    this.props.UpdateOrderOptions(this.props.orderOptions, 'sort', 0, sortParam)
+    setTimeout(() => {
+      this.props.RequestOrders( this.props.selectedCustomer, this.props.orderOptions, this.props.selectedOrder)
+    }, 500);
   }
   selectOrder = (selected) => {
     this.props.SelectOrder(selected)

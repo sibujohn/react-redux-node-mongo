@@ -15,7 +15,7 @@ class ListComponent extends Component{
     {label: 'Least Recent', value: 'asc'}
   ]
   onVirtualScroll = (event) => {
-    this.props.lazyLoadOrders(event.first)
+    this.props.lazyLoadOrders()
   }
   selectSort = (selected)=> {
     let sort = this.sortOptions.filter(item => { return item.value === selected.value})

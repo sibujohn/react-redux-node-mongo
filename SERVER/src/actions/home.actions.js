@@ -79,10 +79,10 @@ export const RequestOrders = (dispatch) => {
       type:"FETCH_ORDERS"
     })
     let query = selectedCustomer.customerId
-    query += "?skip="+orderOptions.skip
-    query += "&limit="+orderOptions.limit
-    query += "&sortby="+orderOptions.sortby
-    query += "&sorthow="+orderOptions.sorthow
+    query += "?skip="+((orderOptions && orderOptions.skip) ? orderOptions.skip : 0)
+    query += "&limit="+((orderOptions && orderOptions.limit) ? orderOptions.limit : 20)
+    query += "&sortby="+((orderOptions && orderOptions.sortby) ? orderOptions.sortby : 'date')
+    query += "&sorthow="+((orderOptions && orderOptions.sorthow) ?orderOptions.sorthow : 'desc')
     Http_Get(REQUEST_ORDER+query)
     .then(function(response) {
       return response.json()
@@ -91,6 +91,7 @@ export const RequestOrders = (dispatch) => {
       dispatch ({
         type:"FETCH_ORDERS_SUCCESS",
         orders : response,
+        orderOptions:orderOptions,
         selectedOrder:selectedOrder
       })
     })

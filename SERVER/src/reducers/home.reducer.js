@@ -55,17 +55,30 @@ const ComponentReducer = (state = initialState, action) => {
       case "CUSTOMER_SELECTED":
         return {
           ...state,
+          orders : [],
+          orderOptions : {
+            skip:0,
+            limit:20,
+            records:0,
+            sortby:"date",
+            sorthow:"desc",
+            loading:false
+          },
           selectedCustomer:action.selectedCustomer,
           selectedLines : []
         }
       case "FETCH_ORDERS_SUCCESS":
-        let orderOptions = state.orderOptions
+        let orderOptions = action.orderOptions
         orderOptions.records = action.orders.total
         orderOptions.loading = false
         let orderList = action.orders.docs.map(i => {
           i.formattedDate = formatDate(i.date)
           return i;
         })
+        if(orderOptions.skip === 0){
+          state.orders = []
+        }
+        orderList = state.orders.concat(orderList)
         return {
           ...state,
           orders:orderList, 
