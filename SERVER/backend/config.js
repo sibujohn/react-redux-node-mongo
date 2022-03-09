@@ -19,6 +19,6 @@ config.DB = {};
 
 
 config.app.views = '../build/index.html';
-config.app.DB = 'mongodb://localhost:27017/iBaset'
+config.app.DB = 'mongodb://localhost:27017/app'
 
 module.exports = config;
