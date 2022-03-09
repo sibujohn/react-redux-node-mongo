@@ -23,9 +23,9 @@ app.use('/api', apiRoutes);
 	
 var swaggerDefinition = {
   info: {
-    title: 'iBaset API',
+    title: 'App API',
     version: '1.0.0',
-    description: 'RESTful APIs for iBaset',
+    description: 'RESTful APIs for App',
   },
   host: 'localhost:3000',
   //basePath: '/',
